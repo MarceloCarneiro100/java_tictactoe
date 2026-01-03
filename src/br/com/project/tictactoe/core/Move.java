@@ -1,6 +1,14 @@
 package br.com.project.tictactoe.core;
 
 public class Move {
-	int i;
-	int j;
+	private int i;
+	private int j;
+
+	public int getI() {
+		return i;
+	}
+
+	public int getJ() {
+		return j;
+	}
 }

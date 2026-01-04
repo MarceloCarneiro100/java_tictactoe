@@ -18,9 +18,9 @@ public class Player {
 		return new Move(moveStr);
 	}
 
-	public void play() {
+	public boolean play() {
 		Move m = inputMove();
-		board.play(this, m);
+		return board.play(this, m);
 	}
 
 	public String getName() {

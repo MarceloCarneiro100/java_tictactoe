@@ -1,11 +1,13 @@
 package br.com.project.tictactoe.score;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import br.com.project.tictactoe.core.Player;
 
@@ -35,12 +37,30 @@ public class FileScoreManager implements ScoreManager {
 
 	@Override
 	public Integer getScore(Player player) {
-		// TODO Auto-generated method stub
-		return null;
+		return scoreMap.get(player.getName().toUpperCase());
 	}
 
 	@Override
-	public void saveScore(Player player) {
-		// TODO Auto-generated method stub
+	public void saveScore(Player player) throws IOException {
+		Integer score = getScore(player);
+
+		if (score == null) {
+			score = 0;
+		}
+
+		int newScore = score + 1;
+		scoreMap.put(player.getName().toUpperCase(), newScore);
+
+		try (BufferedWriter writer = Files.newBufferedWriter(SCORE_FILE)) {
+
+			Set<Map.Entry<String, Integer>> entries = scoreMap.entrySet();
+
+			for (Map.Entry<String, Integer> entry : entries) {
+				String name = entry.getKey().toUpperCase();
+				Integer scoreValue = entry.getValue();
+				writer.write(name + "|" + scoreValue);
+				writer.newLine();
+			}
+		}
 	}
 }
